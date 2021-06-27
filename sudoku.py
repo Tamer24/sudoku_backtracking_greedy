@@ -1,3 +1,4 @@
+from copy import copy, deepcopy;
 sudoku = [
          [5, 3, 0, 0, 7, 0, 0, 0, 0],
          [6, 0, 0, 1, 9, 5, 0, 0, 0],
@@ -28,38 +29,71 @@ def grill_order(n):
         n = 6
     return n
 
-def build_grill(sudoku, grill, x, y):
+def build_grill(sudoku, x, y):
+    grill =[]
     x = grill_order(x)
     y = grill_order(y)
     for i in range(3):
         for j in range(3):
             grill.append(sudoku[i+x][j+y])
     return grill
+
 def build_missing(x, y, sudoku, sudoku_reverse, grill):
-    missing=[1,2,3,4,5,6,7,8,9]
+    dominio=[1,2,3,4,5,6,7,8,9]
     for i in sudoku[x]:
-        if i in missing:
-            missing.remove(i)
+        if i in dominio:
+            dominio.remove(i)
     for i in sudoku_reverse[y]:
-        if i in missing:
-            missing.remove(i)
+        if i in dominio:
+            dominio.remove(i)
     for i in grill:
-        if i in missing:
-            missing.remove(i)
-    return missing
+        if i in dominio:
+            dominio.remove(i)
+    return dominio
 
 grill=[]
 sudoku_reverse = build_reverse(sudoku)
-print(build_grill(sudoku, grill, 0, 2))
-print(build_missing(0,2,sudoku, sudoku_reverse, grill))
 
 def sudoku_greedy(sudoku,sudoku_reverse):
+    sudoku_greedy = deepcopy(sudoku)
+    sudoku_greedy_reverse = deepcopy(sudoku_reverse)
     grill = []
     for i in range(9):
         for j in range(9):
             if (sudoku[i][j] == 0):
-                grill = build_grill(sudoku, grill, i, j)
-                missing = build_missing(i,j,sudoku, sudoku_reverse, grill)
+                grill = build_grill(sudoku_greedy, i, j)
+                missing = build_missing(i,j,sudoku_greedy, sudoku_greedy_reverse, grill)
+                if (len(missing) == 1):
+                    sudoku_greedy[i][j] = missing[0]
+                    sudoku_greedy_reverse[j][i] = missing[0]
+                if (len(missing) == 0):
+                    print("i: ",i,"j: ",j)
+                    print("no se pudo completar:")
+                    return sudoku_greedy
+                print("no conviene completar")
 
+    return sudoku_greedy
+
+def sudoku_half_solver(sudoku,sudoku_reverse):
+    sudoku_greedy = deepcopy(sudoku)
+    sudoku_greedy_reverse = deepcopy(sudoku_reverse)
+    for i in range(9):
+        for j in range(9):
+            if (sudoku[i][j] == 0):
+                grill = build_grill(sudoku_greedy, i, j)
+                missing = build_missing(i, j, sudoku, sudoku_reverse, grill)
+                print("i: ",i,"j: ",j,"missing: ", missing)
+                if (len(missing) == 1):
+                    sudoku_greedy[i][j] = missing[0]
+                    sudoku_greedy_reverse[j][i] = missing[0]
+                    print("ubicado")
+    return sudoku_greedy
+
+greedy = sudoku_half_solver(sudoku,sudoku_reverse)
+for i in sudoku:
+    print(i)
+print()
+for i in greedy:
+    print(i)
 
 #sudoku_greedy(sudoku,sudoku_reverse)
