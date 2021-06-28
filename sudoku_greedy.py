@@ -64,7 +64,7 @@ def build_missing(x, y, sudoku, sudoku_reverse, grill):
 grill=[]
 sudoku_reverse = build_reverse(sudoku)
 
-def sudoku_dynamic(sudoku,sudoku_reverse):
+def sudoku_greedy(sudoku,sudoku_reverse):
     sudoku_greedy = deepcopy(sudoku)
     sudoku_greedy_reverse = deepcopy(sudoku_reverse)
     actualizado = 1
@@ -84,12 +84,12 @@ def sudoku_dynamic(sudoku,sudoku_reverse):
         print("actualizado: ",actualizado)
     return sudoku_greedy
 
-dynamic = sudoku_dynamic(sudoku,sudoku_reverse)
+greedy = sudoku_greedy(sudoku,sudoku_reverse)
 print("sudoku, original:")
 for i in sudoku:
     print(i)
-print("sudoku, dinamico:")
-for i in dynamic:
+print("sudoku, greedy:")
+for i in greedy:
     print(i)
 
 #sudoku_greedy(sudoku,sudoku_reverse)
