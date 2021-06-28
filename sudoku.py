@@ -11,7 +11,17 @@ sudoku = [
          [0, 0, 0, 0, 8, 0, 0, 7, 9]
 ]
 
-grill0 = grill1 = grill2 = grill3 = grill4 = grill5 = grill6 = grill7 = grill8 =  []
+# sudoku = [
+#          [0, 0, 0, 0, 1, 3, 0, 0, 0],
+#          [0, 0, 0, 0, 0, 0, 6, 7, 4],
+#          [0, 4, 9, 0, 0, 0, 0, 0, 0],
+#          [0, 0, 0, 0, 0, 0, 5, 9, 0],
+#          [0, 0, 0, 0, 8, 7, 0, 0, 0],
+#          [6, 9, 1, 0, 0, 0, 0, 0, 0],
+#          [1, 0, 0, 7, 0, 4, 0, 0, 0],
+#          [2, 0, 0, 6, 0, 0, 0, 0, 1],
+#          [0, 5, 0, 0, 0, 0, 0, 4, 3]
+# ]
 
 def build_reverse(sudoku):
     sudoku_reverse = [[],[],[],[],[],[],[],[],[]]
@@ -95,9 +105,11 @@ def sudoku_dynamic(sudoku,sudoku_reverse):
     return sudoku_greedy
 
 dynamic = sudoku_dynamic(sudoku,sudoku_reverse)
+print("sudoku, original:")
 for i in sudoku:
     print(i)
-print()
+print("sudoku, dinamico:")
 for i in dynamic:
     print(i)
 
+#sudoku_greedy(sudoku,sudoku_reverse)
