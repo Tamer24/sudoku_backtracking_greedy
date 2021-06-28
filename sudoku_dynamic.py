@@ -64,26 +64,6 @@ def build_missing(x, y, sudoku, sudoku_reverse, grill):
 grill=[]
 sudoku_reverse = build_reverse(sudoku)
 
-def sudoku_greedy(sudoku,sudoku_reverse):
-    sudoku_greedy = deepcopy(sudoku)
-    sudoku_greedy_reverse = deepcopy(sudoku_reverse)
-    grill = []
-    for i in range(9):
-        for j in range(9):
-            if (sudoku[i][j] == 0):
-                grill = build_grill(sudoku_greedy, i, j)
-                missing = build_missing(i,j,sudoku_greedy, sudoku_greedy_reverse, grill)
-                if (len(missing) == 1):
-                    sudoku_greedy[i][j] = missing[0]
-                    sudoku_greedy_reverse[j][i] = missing[0]
-                if (len(missing) == 0):
-                    print("i: ",i,"j: ",j)
-                    print("no se pudo completar:")
-                    return sudoku_greedy
-                print("no conviene completar")
-
-    return sudoku_greedy
-
 def sudoku_dynamic(sudoku,sudoku_reverse):
     sudoku_greedy = deepcopy(sudoku)
     sudoku_greedy_reverse = deepcopy(sudoku_reverse)
