@@ -74,26 +74,30 @@ def sudoku_greedy(sudoku,sudoku_reverse):
 
     return sudoku_greedy
 
-def sudoku_half_solver(sudoku,sudoku_reverse):
+def sudoku_dynamic(sudoku,sudoku_reverse):
     sudoku_greedy = deepcopy(sudoku)
     sudoku_greedy_reverse = deepcopy(sudoku_reverse)
-    for i in range(9):
-        for j in range(9):
-            if (sudoku[i][j] == 0):
-                grill = build_grill(sudoku_greedy, i, j)
-                missing = build_missing(i, j, sudoku, sudoku_reverse, grill)
-                print("i: ",i,"j: ",j,"missing: ", missing)
-                if (len(missing) == 1):
-                    sudoku_greedy[i][j] = missing[0]
-                    sudoku_greedy_reverse[j][i] = missing[0]
-                    print("ubicado")
+    actualizado = 1
+    while (actualizado > 0):
+        actualizado = 0
+        for i in range(9):
+            for j in range(9):
+                if (sudoku[i][j] == 0):
+                    grill = build_grill(sudoku_greedy, i, j)
+                    missing = build_missing(i, j, sudoku_greedy, sudoku_greedy_reverse, grill)
+                    if (len(missing) == 1):
+                        print("i: ",i,"j: ",j,"missing: ", missing)
+                        sudoku_greedy[i][j] = missing[0]
+                        sudoku_greedy_reverse[j][i] = missing[0]
+                        actualizado = actualizado + 1
+                        print("ubicado")
+        print("actualizado: ",actualizado)
     return sudoku_greedy
 
-greedy = sudoku_half_solver(sudoku,sudoku_reverse)
+dynamic = sudoku_dynamic(sudoku,sudoku_reverse)
 for i in sudoku:
     print(i)
 print()
-for i in greedy:
+for i in dynamic:
     print(i)
 
-#sudoku_greedy(sudoku,sudoku_reverse)
